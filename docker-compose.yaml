@@ -5,7 +5,7 @@ services:
     image: moderationapi
     container_name: moderationapiapp
     depends_on:
-      - mongodb
+      - moderationmongodb
     build:
       context: .
       dockerfile: Dockerfile
@@ -18,8 +18,8 @@ services:
     restart: always
 
   mongodb:
-    image: mongo
-    container_name: mongodb
+    image: moderationmongodb
+    container_name: moderationmongodb
     expose:
       - 27017
     ports:
