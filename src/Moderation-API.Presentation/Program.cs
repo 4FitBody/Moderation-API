@@ -14,12 +14,14 @@ using Moderation_API.Infrastructure.SportSupplements.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetSection("ModerationDb").Value;
-var database = builder.Configuration.GetSection("Database").Value;
-System.Console.WriteLine(database);
-var foodcollection = builder.Configuration.GetSection("FoodCollection").Value;
-var exercisescollection = builder.Configuration.GetSection("ExercisesCollection").Value;
-var supplemenetscollection = builder.Configuration.GetSection("SupplementsCollection").Value;
 
+var database = builder.Configuration.GetSection("Database").Value;
+
+var foodcollection = builder.Configuration.GetSection("FoodCollection").Value;
+
+var exercisescollection = builder.Configuration.GetSection("ExercisesCollection").Value;
+
+var supplemenetscollection = builder.Configuration.GetSection("SupplementsCollection").Value;
 
 var infrastructureAssembly = typeof(FoodMongoRepository).Assembly;
 
@@ -60,7 +62,6 @@ builder.Services.AddSingleton<IExerciseRepository>(provider =>
 
 builder.Services.AddAuthorization();
 
-
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -83,7 +84,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("BlazorWasmPolicy", corsBuilder =>
     {
         corsBuilder
-            .WithOrigins("http://localhost:5160")
+            .AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
