@@ -17,19 +17,6 @@ services:
       - moderationbridgenetwork
     restart: always
 
-  mongodb:
-    image: moderationmongodb
-    container_name: moderationmongodb
-    expose:
-      - 27017
-    ports:
-      - 27017:27017
-    networks:
-      - moderationbridgenetwork
-    volumes:
-      - mymongovolume:/data/db
-      - mymongovolume:/data/configdb
-    restart: always
 
   
 
