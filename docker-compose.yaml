@@ -4,8 +4,6 @@ services:
   moderationapiapp:
     image: moderationapi
     container_name: moderationapiapp
-    depends_on:
-      - moderationmongodb
     build:
       context: .
       dockerfile: Dockerfile
