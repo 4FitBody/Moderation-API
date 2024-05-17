@@ -1,11 +1,9 @@
 namespace Moderation_API.Presentation.Controllers;
 
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Authorize(Roles = "Moderator")]
 [Route("api/[controller]/[action]")]
 public class ModerationController : ControllerBase
 {

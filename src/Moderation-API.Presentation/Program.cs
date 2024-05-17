@@ -15,8 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetSection("ModerationDb").Value;
 
-var database = builder.Configuration.GetSection("Database").Value;
-
 var foodcollection = builder.Configuration.GetSection("FoodCollection").Value;
 
 var exercisescollection = builder.Configuration.GetSection("ExercisesCollection").Value;
@@ -32,32 +30,32 @@ builder.Services.AddMediatR(configurations =>
 
 builder.Services.AddSingleton<IFoodRepository>(provider =>
 {
-    if (string.IsNullOrWhiteSpace(connectionString) || string.IsNullOrWhiteSpace(database) || string.IsNullOrWhiteSpace(foodcollection))
+    if (string.IsNullOrWhiteSpace(connectionString) || string.IsNullOrWhiteSpace(foodcollection))
     {
         throw new Exception($"Not Found");
     }
 
-    return new FoodMongoRepository(connectionString, database, foodcollection);
+    return new FoodMongoRepository(connectionString, "FoodDb", foodcollection);
 });
 
 builder.Services.AddSingleton<ISportSupplementRepository>(provider =>
 {
-    if (string.IsNullOrWhiteSpace(connectionString) || string.IsNullOrWhiteSpace(database) || string.IsNullOrWhiteSpace(supplemenetscollection))
+    if (string.IsNullOrWhiteSpace(connectionString) || string.IsNullOrWhiteSpace(supplemenetscollection))
     {
         throw new Exception($"Not Found");
     }
 
-    return new SportSupplementMongoRepository(connectionString, database, supplemenetscollection);
+    return new SportSupplementMongoRepository(connectionString, "SportSupplementDb", supplemenetscollection);
 });
 
 builder.Services.AddSingleton<IExerciseRepository>(provider =>
 {
-    if (string.IsNullOrWhiteSpace(connectionString) || string.IsNullOrWhiteSpace(database) || string.IsNullOrWhiteSpace(exercisescollection))
+    if (string.IsNullOrWhiteSpace(connectionString) || string.IsNullOrWhiteSpace(exercisescollection))
     {
         throw new Exception($"Not Found");
     }
 
-    return new ExerciseMongoRepository(connectionString, database, exercisescollection);
+    return new ExerciseMongoRepository(connectionString, "ExercisesDb", exercisescollection);
 });
 
 builder.Services.AddAuthorization();
@@ -91,19 +89,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var client = new MongoClient(connectionString);
-
-    var moderationDb = client.GetDatabase(database);
-
-    var foodCollection = moderationDb.GetCollection<Food>(foodcollection);
-
-    var exercisesCollection = moderationDb.GetCollection<Exercise>(exercisescollection);
-
-    var supplementsCollection = moderationDb.GetCollection<SportSupplement>(supplemenetscollection);
-}
 
 app.UseSwagger();
 
