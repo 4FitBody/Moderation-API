@@ -37,7 +37,7 @@ builder.Services.AddSingleton<IFoodRepository>(provider =>
         throw new Exception($"Not Found");
     }
 
-    return new FoodMongoRepository(connectionString, database, foodcollection);
+    return new FoodMongoRepository(connectionString, "FoodDb", foodcollection);
 });
 
 builder.Services.AddSingleton<ISportSupplementRepository>(provider =>
@@ -47,7 +47,7 @@ builder.Services.AddSingleton<ISportSupplementRepository>(provider =>
         throw new Exception($"Not Found");
     }
 
-    return new SportSupplementMongoRepository(connectionString, database, supplemenetscollection);
+    return new SportSupplementMongoRepository(connectionString, "SportSupplementDb", supplemenetscollection);
 });
 
 builder.Services.AddSingleton<IExerciseRepository>(provider =>
@@ -57,7 +57,7 @@ builder.Services.AddSingleton<IExerciseRepository>(provider =>
         throw new Exception($"Not Found");
     }
 
-    return new ExerciseMongoRepository(connectionString, database, exercisescollection);
+    return new ExerciseMongoRepository(connectionString, "ExercisesDb", exercisescollection);
 });
 
 builder.Services.AddAuthorization();
